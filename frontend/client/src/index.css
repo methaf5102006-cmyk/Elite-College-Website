@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+/* Enables class-based dark mode (toggled via the 'dark' class on <html>) 
+   instead of only following the OS/browser preference. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Palette: deep navy, sky blue, white — no red anywhere */
+  --color-ink: #0B2559;
+  --color-ink-light: #1A3B7A;
+  --color-gold: #2E7ED3;
+  --color-gold-dark: #1F5C9E;
+  --color-parchment: #EAF4FB;
+  --color-leaf: #4B7F3A;
+  --color-leaf-light: #EAF2E6;
+  --color-charcoal: #1C1C1C;
+  --color-slate: #5B6270;
+
+  --font-display: "Fraunces", serif;
+  --font-body: "Inter", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-parchment text-charcoal font-body;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-semibold;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================
+   DARK MODE — global overrides
+   These apply automatically across every page
+   without needing to touch individual JSX files.
+   ========================================= */
+
+.dark body {
+  @apply bg-charcoal text-parchment;
+}
+
+/* Fixes native <select> dropdowns showing invisible (white-on-white) text
+   in dark mode. Browsers render the open option list using OS/browser
+   chrome by default; color-scheme tells it to use a dark palette there too. */
+.dark {
+  color-scheme: dark;
+}
+
+.dark select,
+.dark option {
+  background-color: #262626;
+  color: #EAF4FB;
+}
+
+/* Backgrounds */
+.dark .bg-parchment {
+  background-color: #1C1C1C;
+}
+.dark .bg-white {
+  background-color: #262626;
+}
+.dark .bg-ink {
+  background-color: #081A40;
+}
+
+/* Text colors */
+.dark .text-ink {
+  color: #EAF4FB;
+}
+.dark .text-charcoal {
+  color: #EAF4FB;
+}
+.dark .text-slate {
+  color: #A8AEB8;
+}
+.dark .text-gold-dark {
+  color: #6FB3E8;
+}
+
+/* Borders */
+.dark .border-ink\/10 {
+  border-color: rgba(234, 244, 251, 0.1);
+}
+.dark .border-ink\/20 {
+  border-color: rgba(234, 244, 251, 0.2);
+}
+.dark .border-ink\/5 {
+  border-color: rgba(234, 244, 251, 0.05);
+}
+
+/* Shadows look too harsh on dark backgrounds — soften them */
+.dark .shadow-sm,
+.dark .shadow-lg,
+.dark .shadow-md {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
