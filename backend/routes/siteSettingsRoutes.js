@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   getSiteSettings,
   updateSiteSettings
-} = require('../controllers/SiteSettings.controller');
+} = require('../controllers/Sitesettings.controller');
 const { protect, isAdmin } = require('../middleware/auth.middleware');
 
 router.get('/', getSiteSettings);
