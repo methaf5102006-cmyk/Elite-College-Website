@@ -92,7 +92,7 @@ const Navbar = () => {
   const closeTimeoutRef = useRef(null);
   const { admin } = useAuth();
   const { isDark, toggleTheme } = useTheme();
-  const adminPath = admin ? "/admin/dashboard" : "/admin/login";
+  const adminPath = "/admin/dashboard";
 
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const [navLinks, setNavLinks] = useState(DEFAULT_NAV_LINKS);
@@ -336,16 +336,18 @@ const Navbar = () => {
               </AnimatePresence>
             </motion.button>
 
-            <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.92 }}>
-              <NavLink
-                to={adminPath}
-                className="inline-flex items-center justify-center gap-1.5 w-10 h-10 rounded-full border border-ink/20 text-ink hover:bg-ink hover:text-parchment transition-colors duration-200"
-                aria-label="Admin"
-                title="Admin"
-              >
-                <FiUser size={16} />
-              </NavLink>
-            </motion.div>
+            {admin && (
+              <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.92 }}>
+                <NavLink
+                  to={adminPath}
+                  className="inline-flex items-center justify-center gap-1.5 w-10 h-10 rounded-full border border-ink/20 text-ink hover:bg-ink hover:text-parchment transition-colors duration-200"
+                  aria-label="Admin"
+                  title="Admin"
+                >
+                  <FiUser size={16} />
+                </NavLink>
+              </motion.div>
+            )}
           </div>
 
           <button
@@ -463,14 +465,16 @@ const Navbar = () => {
                 {isDark ? "Light Mode" : "Dark Mode"}
               </button>
 
-              <NavLink
-                to={adminPath}
-                onClick={() => setIsOpen(false)}
-                className="mt-2 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-ink/20 text-ink text-sm font-semibold tracking-wide"
-              >
-                <FiUser size={15} />
-                {admin ? "Admin Dashboard" : "Admin Login"}
-              </NavLink>
+              {admin && (
+                <NavLink
+                  to={adminPath}
+                  onClick={() => setIsOpen(false)}
+                  className="mt-2 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-ink/20 text-ink text-sm font-semibold tracking-wide"
+                >
+                  <FiUser size={15} />
+                  Admin Dashboard
+                </NavLink>
+              )}
 
               <div className="mt-4 pt-4 border-t border-ink/10 flex flex-col gap-2 text-xs text-slate">
                 <span className="flex items-center gap-2">
