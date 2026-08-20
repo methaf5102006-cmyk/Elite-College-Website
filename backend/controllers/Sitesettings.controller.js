@@ -1,4 +1,4 @@
-const SiteSettings = require('../models/Sitesettings.model');
+const SiteSettings = require('../models/SiteSettings.model');
 
 // @desc    Get site settings (header + footer content)
 // @route   GET /api/settings
