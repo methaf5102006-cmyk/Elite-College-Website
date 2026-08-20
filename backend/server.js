@@ -22,12 +22,41 @@ const app = express();
 // Core Middleware
 // ------------------------------
 app.use(helmet()); // secure HTTP headers
+
+// CORS: allow the fixed production origin (from CLIENT_URL), localhost for
+// dev, and any *.vercel.app origin (covers preview deployments, which get a
+// new URL on every push and would otherwise get blocked).
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.CLIENT_URL, // e.g. https://college-website-five-gilt.vercel.app
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like curl, Postman, server-to-server)
+      if (!origin) return callback(null, true);
+
+      let hostname = "";
+      try {
+        hostname = new URL(origin).hostname;
+      } catch (err) {
+        return callback(new Error("Not allowed by CORS"));
+      }
+
+      const isAllowedExact = allowedOrigins.includes(origin);
+      const isVercelPreview = hostname.endsWith(".vercel.app");
+
+      if (isAllowedExact || isVercelPreview) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   })
 );
+
 app.use(express.json()); // parse JSON body
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
