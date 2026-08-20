@@ -46,8 +46,9 @@ app.use(
 
       const isAllowedExact = allowedOrigins.includes(origin);
       const isVercelPreview = hostname.endsWith(".vercel.app");
+      const isNetlifyPreview = hostname.endsWith(".netlify.app");
 
-      if (isAllowedExact || isVercelPreview) {
+      if (isAllowedExact || isVercelPreview || isNetlifyPreview) {
         return callback(null, true);
       }
 
